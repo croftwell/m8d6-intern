@@ -1,0 +1,174 @@
+require 'json'
+require 'fileutils'
+require 'terminal-table'
+
+FILE_PATH = "data/student_grades.json"
+FileUtils.mkdir_p("data") unless Dir.exist?("data")
+
+class Student
+  attr_reader :name, :number, :midterm, :final, :is_passed
+
+  def initialize(name, number, midterm, final)
+    @name       = name
+    @number     = number
+    @midterm    = midterm
+    @final      = final
+    @is_passed  = calculate_grade
+  end
+
+  def self.create(name, number, midterm, final)
+    new(name, number, midterm, final)
+  end
+
+  def self.destroy(students, student);
+
+  def update(midterm, final)
+    @midterm = midterm
+    @final = final
+    @is_passed = calculate_grade
+  end
+
+  private
+
+  def calculate_grade
+    average = (@midterm * 0.4) + (@final * 0.6)
+    average >= 50 ? "Passed" : "Failed"
+  end
+end
+
+students = []
+
+def load_students(students)
+  if File.exist?(FILE_PATH)
+    student_data = JSON.parse(File.read(FILE_PATH), symbolize_names: true)
+    student_data.each do |student_info|
+      students << Student.create(student_info[:name], student_info[:number], student_info[:midterm], student_info[:final])
+    end
+  end
+end
+
+def save_students(students)
+  student_data = students.map { |s| { name: s.name, number: s.number, midterm: s.midterm, final: s.final, is_passed: s.is_passed } }
+  File.open(FILE_PATH, "w") { |file| file.write(JSON.pretty_generate(student_data)) }
+  puts "Data saved to #{FILE_PATH}."
+end
+
+def add_student(students)
+  print "Enter Name: "
+  name = gets.chomp
+  print "Enter Number: "
+  number = gets.chomp
+  
+  midterm = nil
+  loop do
+    print "Enter Midterm Grade (0-100): "
+    midterm = gets.chomp.to_f
+    break if midterm.between?(0, 100)
+    puts "Invalid input. Please enter a grade between 0 and 100."
+  end
+  
+  final = nil
+  loop do
+    print "Enter Final Grade (0-100): "
+    final = gets.chomp.to_f
+    break if final.between?(0, 100)
+    puts "Invalid input. Please enter a grade between 0 and 100."
+  end
+  
+  students << Student.create(name, number, midterm, final)
+  puts "Student added successfully."
+end
+
+def view_students_table(students)
+  if students.empty?
+    puts "No students available."
+    return
+  end
+
+  rows = students.map { |student| [student.name, student.number, student.midterm, student.final, student.is_passed] }
+  table = Terminal::Table.new(headings: ['Name', 'Number', 'Midterm', 'Final', 'Result'], rows: rows)
+  puts table
+end
+
+def view_students_json(students)
+  if students.empty?
+    puts "No students available."
+    return
+  end
+  puts JSON.pretty_generate(students.map { |s| { name: s.name, number: s.number, midterm: s.midterm, final: s.final, is_passed: s.is_passed } })
+end
+
+def delete_student(students)
+  print "Enter Student Number to Delete: "
+  number = gets.chomp
+  if students.reject! { |s| s.number == number }
+    puts "Student deleted successfully."
+  else
+    puts "Student not found."
+  end
+end
+
+def update_student(students)
+  print "Enter Student Number to Update: "
+  number = gets.chomp
+  student = students.find { |s| s.number == number }
+  if student
+    midterm = nil
+    loop do
+      print "Enter new Midterm Grade (0-100): "
+      midterm = gets.chomp.to_f
+      break if midterm.between?(0, 100)
+      puts "Invalid input. Please enter a grade between 0 and 100."
+    end
+    
+    final = nil
+    loop do
+      print "Enter new Final Grade (0-100): "
+      final = gets.chomp.to_f
+      break if final.between?(0, 100)
+      puts "Invalid input. Please enter a grade between 0 and 100."
+    end
+    
+    student.update(midterm, final)
+    puts "Student information updated."
+  else
+    puts "Student not found."
+  end
+end
+
+def main(students)
+  load_students(students)
+  loop do
+    puts "\nMain Menu"
+    puts "1. Add Student"
+    puts "2. View Students (Table)"
+    puts "3. View Students (JSON)"
+    puts "4. Update Student"
+    puts "5. Delete Student"
+    puts "6. Save to JSON"
+    puts "7. Exit"
+    print "Select an option: "
+    choice = gets.chomp.to_i
+    case choice
+    when 1
+      add_student(students)
+    when 2
+      view_students_table(students)
+    when 3
+      view_students_json(students)
+    when 4
+      update_student(students)
+    when 5
+      delete_student(students)
+    when 6
+      save_students(students)
+    when 7
+      puts "Exiting program..."
+      break
+    else
+      puts "Invalid choice, please try again."
+    end
+  end
+end
+
+main(students)
