@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midterm Final Calculation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Midterm Final Grade Entry</h2>
+
+        <form action="" id="form" method="get">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name">
+
+            <label for="number">Number</label>
+            <input type="text" id="number" name="number" placeholder="Number">
+
+            <label for="midterm">Midterm Grade (0-100)</label>
+            <input type="number" id="midterm" name="midterm" placeholder="Midterm Grade">
+
+            <label for="final">Final Grade (0-100)</label>
+            <input type="number" id="final" name="final" placeholder="Final Grade">
+
+            <button type="submit">Save</button>
+            <button type="button" onclick="show()">Show</button>
+        </form>
+
+        <div id="alertBox" class="alert" style="display: none;">
+            <span class="closebtn" onclick="closeAlert()">&times;</span>
+            <span id="alertMessage"></span>
+            <span id="countdown"></span>
+        </div>
+
+        <table id="studentTable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Number</th>
+                    <th>Midterm</th>
+                    <th>Final</th>
+                    <th>Average</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
