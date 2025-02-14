@@ -1,7 +1,10 @@
-let students = [];
+let students = JSON.parse(localStorage.getItem("students")) || [];
 let updatedIndex = null;
+let tableVisible = false; // Sayfa yüklendiğinde tablo kapalı olsun
 
 const form = document.querySelector("#form");
+const studentTable = document.getElementById("studentTable");
+
 form.addEventListener("submit", save);
 
 function save(event) {
@@ -28,22 +31,28 @@ function save(event) {
     if (updatedIndex !== null) {
         students[updatedIndex] = { name, number, midterm, final, average };
         updatedIndex = null;
-        showAlert("Student information has been updated!", "success");
+        showAlert("Student updated!", "success");
     } else {
         students.push({ name, number, midterm, final, average });
-        showAlert("Student successfully added!", "success");
+        showAlert("Student added!", "success");
     }
 
+    localStorage.setItem("students", JSON.stringify(students));
     event.currentTarget.reset();
 }
 
 function show() {
-    let studentTable = document.getElementById("studentTable");
-    let tbody = studentTable.querySelector("tbody");
+    if (tableVisible) {
+        studentTable.style.display = "none";
+        tableVisible = false;
+        return;
+    }
+
+    let tbody = document.querySelector("#studentTable tbody");
     tbody.innerHTML = "";
 
     if (students.length === 0) {
-        showAlert("No students registered yet.", "error");
+        showAlert("No students yet.", "error");
         return;
     }
 
@@ -56,7 +65,7 @@ function show() {
             <td>${student.midterm}</td>
             <td>${student.final}</td>
             <td>${student.average.toFixed(2)}</td>
-            <td class="action-buttons">
+            <td>
                 <button onclick="deleteStudent(${index})">Delete</button>
                 <button onclick="update(${index})">Update</button>
             </td>
@@ -64,11 +73,13 @@ function show() {
         tbody.appendChild(row);
     });
 
-    studentTable.style.display = "table";  
+    studentTable.style.display = "table";
+    tableVisible = true;
 }
 
 function deleteStudent(index) {
     students.splice(index, 1);
+    localStorage.setItem("students", JSON.stringify(students));
     show();
     showAlert("Student deleted!", "error");
 }
@@ -80,34 +91,21 @@ function update(index) {
     document.getElementById("midterm").value = student.midterm;
     document.getElementById("final").value = student.final;
 
-    updatedIndex = index; 
+    updatedIndex = index;
 }
 
-/* Geri Sayımlı Bildirim Fonksiyonu */
 function showAlert(message, type) {
     const alertBox = document.getElementById("alertBox");
-    const alertMessage = document.getElementById("alertMessage");
-    const countdownSpan = document.getElementById("countdown");
-
-    alertMessage.textContent = message;
+    alertBox.textContent = message;
     alertBox.style.backgroundColor = type === "error" ? "#f44336" : "#4CAF50";
     alertBox.style.display = "block";
 
-    let secondsLeft = 5;
-    countdownSpan.textContent = ` (${secondsLeft}s)`;
-
-    let countdown = setInterval(() => {
-        secondsLeft--;
-        countdownSpan.textContent = ` (${secondsLeft}s)`;
-
-        if (secondsLeft <= 0) {
-            clearInterval(countdown);
-            alertBox.style.display = "none";
-        }
-    }, 1000);
+    setTimeout(() => {
+        alertBox.style.display = "none";
+    }, 5000);
 }
 
-/* Bildirimi Kapatma */
-function closeAlert() {
-    document.getElementById("alertBox").style.display = "none";
-}
+// Sayfa yüklendiğinde tabloyu kapalı yap
+document.addEventListener("DOMContentLoaded", () => {
+    studentTable.style.display = "none";
+});

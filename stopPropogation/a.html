@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopPropagation Örneği</title>
+    <style>
+        .outer {
+            width: 300px;
+            height: 300px;
+            background-color: lightblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .inner {
+            width: 150px;
+            height: 150px;
+            background-color: coral;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>stopPropagation() Kullanılmadan</h2>
+    <div class="outer" id="outer1">
+        <div class="inner" id="inner1"></div>
+    </div>
+
+    <h2>stopPropagation() Kullanılarak</h2>
+    <div class="outer" id="outer2">
+        <div class="inner" id="inner2"></div>
+    </div>
+
+    <script>
+        // stopPropagation OLMADAN: İç div'e tıklayınca hem iç hem dış tetikleniyor.
+        document.getElementById("outer1").addEventListener("click", () => {
+            alert("Outer Div Clicked! (stopPropagation yok)");
+        });
+
+        document.getElementById("inner1").addEventListener("click", () => {
+            alert("Inner Div Clicked! (stopPropagation yok)");
+        });
+
+        // stopPropagation KULLANILARAK: İç div'e tıklayınca sadece iç tetikleniyor.
+        document.getElementById("outer2").addEventListener("click", () => {
+            alert("Outer Div Clicked! (stopPropagation var)");
+        });
+
+        document.getElementById("inner2").addEventListener("click", (event) => {
+            event.stopPropagation(); // Olayın dış div'e yayılmasını engelliyor
+            alert("Inner Div Clicked! (stopPropagation var)");
+        });
+    </script>
+
+</body>
+</html>

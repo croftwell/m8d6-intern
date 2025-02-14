@@ -8,14 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <h2 class="text-center">Midterm Final Grade Entry</h2>
+        <h2 class="title">Midterm Final Grade Entry</h2>
 
-        <form action="" id="form" method="get">
+        <form id="form">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Name">
+            <input type="text" id="name" name="name" placeholder="Enter name">
 
             <label for="number">Number</label>
-            <input type="text" id="number" name="number" placeholder="Number">
+            <input type="text" id="number" name="number" placeholder="Enter student number">
 
             <label for="midterm">Midterm Grade (0-100)</label>
             <input type="number" id="midterm" name="midterm" placeholder="Midterm Grade">
@@ -23,8 +23,10 @@
             <label for="final">Final Grade (0-100)</label>
             <input type="number" id="final" name="final" placeholder="Final Grade">
 
-            <button type="submit">Save</button>
-            <button type="button" onclick="show()">Show</button>
+            <div class="button-group">
+                <button type="submit" class="btn save-btn">Save</button>
+                <button type="button" class="btn show-btn" onclick="show()">Show</button>
+            </div>
         </form>
 
         <div id="alertBox" class="alert" style="display: none;">
@@ -33,7 +35,7 @@
             <span id="countdown"></span>
         </div>
 
-        <table id="studentTable" style="display:none;">
+        <table id="studentTable" class="table" style="display:none;">
             <thead>
                 <tr>
                     <th>Name</th>
