@@ -1,4 +1,4 @@
-# Grade Calculation Tool
+# 1 Grade Calculation Tool
 
 This project is a simple web-based tool to help calculate and track grades. It was developed using **HTML**, **CSS**, and **JavaScript** to provide an interactive and user-friendly experience.
 
@@ -11,3 +11,4 @@ This project is a simple web-based tool to help calculate and track grades. It w
 
 ## Screenshots
 
+(screenshot/screenshot1.png)
