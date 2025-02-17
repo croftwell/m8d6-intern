@@ -11,4 +11,4 @@ This project is a simple web-based tool to help calculate and track grades. It w
 
 ## Screenshots
 
-(screenshot/screenshot1.png)
+![Ekran Görüntüsü 1](screenshot/screenshot1.png)
