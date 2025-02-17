@@ -1,6 +1,6 @@
 let students = JSON.parse(localStorage.getItem("students")) || [];
 let updatedIndex = null;
-let tableVisible = false; // Sayfa yüklendiğinde tablo kapalı olsun
+let tableVisible = false; 
 
 const form = document.querySelector("#form");
 const studentTable = document.getElementById("studentTable");
@@ -105,7 +105,7 @@ function showAlert(message, type) {
     }, 5000);
 }
 
-// Sayfa yüklendiğinde tabloyu kapalı yap
+
 document.addEventListener("DOMContentLoaded", () => {
     studentTable.style.display = "none";
 });

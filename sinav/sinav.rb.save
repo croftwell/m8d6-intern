@@ -1,3 +1,8 @@
+
+
+
+
+
 require 'json'
 require 'fileutils'
 require 'terminal-table'
@@ -20,9 +25,7 @@ class Student
     new(name, number, midterm, final)
   end
 
-  def self.destroy(students, student_number)
-    students.reject! { |s| s.number == student_number }
-  end
+  def self.destroy(students, student);
 
   def update(midterm, final)
     @midterm = midterm
@@ -61,20 +64,24 @@ def add_student(students)
   print "Enter Number: "
   number = gets.chomp
   
-  midterm = get_valid_grade("Midterm")
-  final = get_valid_grade("Final")
+  midterm = nil
+  loop do
+    print "Enter Midterm Grade (0-100): "
+    midterm = gets.chomp.to_f
+    break if midterm.between?(0, 100)
+    puts "Invalid input. Please enter a grade between 0 and 100."
+  end
+  
+  final = nil
+  loop do
+    print "Enter Final Grade (0-100): "
+    final = gets.chomp.to_f
+    break if final.between?(0, 100)
+    puts "Invalid input. Please enter a grade between 0 and 100."
+  end
   
   students << Student.create(name, number, midterm, final)
   puts "Student added successfully."
-end
-
-def get_valid_grade(type)
-  loop do
-    print "Enter #{type} Grade (0-100): "
-    grade = gets.chomp.to_f
-    return grade if grade.between?(0, 100)
-    puts "Invalid input. Please enter a grade between 0 and 100."
-  end
 end
 
 def view_students_table(students)
@@ -99,8 +106,7 @@ end
 def delete_student(students)
   print "Enter Student Number to Delete: "
   number = gets.chomp
-  if students.any? { |s| s.number == number }
-    Student.destroy(students, number)
+  if students.reject! { |s| s.number == number }
     puts "Student deleted successfully."
   else
     puts "Student not found."
@@ -112,8 +118,22 @@ def update_student(students)
   number = gets.chomp
   student = students.find { |s| s.number == number }
   if student
-    midterm = get_valid_grade("New Midterm")
-    final = get_valid_grade("New Final")
+    midterm = nil
+    loop do
+      print "Enter new Midterm Grade (0-100): "
+      midterm = gets.chomp.to_f
+      break if midterm.between?(0, 100)
+      puts "Invalid input. Please enter a grade between 0 and 100."
+    end
+    
+    final = nil
+    loop do
+      print "Enter new Final Grade (0-100): "
+      final = gets.chomp.to_f
+      break if final.between?(0, 100)
+      puts "Invalid input. Please enter a grade between 0 and 100."
+    end
+    
     student.update(midterm, final)
     puts "Student information updated."
   else

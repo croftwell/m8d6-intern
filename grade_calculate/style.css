@@ -31,7 +31,7 @@ h2 {
     text-align: center;
 }
 
-/* Label'ları blok seviyesine getirerek alt alta yerleştirdik */
+
 label {
     font-weight: bold;
 }
@@ -86,20 +86,20 @@ th, td {
     gap: 5px;
 }
 
-/* Bildirim Kutusu */
+
 .alert {
     position: fixed;
     top: 20px;
     right: 20px;
     padding: 15px;
-    background-color: #4CAF50; /* Yeşil */
+    background-color: #4CAF50; 
     color: white;
     border-radius: 5px;
     display: none;
     font-size: 16px;
   }
   
-  /* Kapatma Butonu */
+ 
   .closebtn {
     margin-left: 15px;
     color: white;
@@ -111,8 +111,109 @@ th, td {
     transition: 0.3s;
   }
   
-  /* Kapatma Butonu Üzerine Gelince */
+  
   .closebtn:hover {
     color: black;
   }
-  
+   
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.title {
+    color: #333;
+    font-size: 22px;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+    text-align: left;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    width: 48%;
+}
+
+.save-btn {
+    background-color: #28a745;
+}
+
+.show-btn {
+    background-color: #007bff;
+}
+
+/* Tablo Stilleri */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+
+.alert {
+    padding: 15px;
+    background-color: #f44336;
+    color: white;
+    margin-top: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.closebtn {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+}
