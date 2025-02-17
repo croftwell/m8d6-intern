@@ -24,12 +24,9 @@ This project is a CLI-based tool developed to calculate exam scores. It is writt
 - **CLI Application**: A user-friendly terminal-based interface.
 - **Multiple Exam Support**: It allows entering grades for multiple exams and calculates the success score.
 
-## Screenshots
-
-![Screenshot1](screenshot/screenshot2.png)
 
 
-# JavaScript stopPropagation Example
+# 3. JavaScript stopPropagation Example
 
 This project demonstrates the use of `stopPropagation()` in JavaScript to prevent event bubbling in the DOM. It provides an example where two nested `div` elements respond to click events, with the inner element stopping the event from propagating to the outer element.
 
