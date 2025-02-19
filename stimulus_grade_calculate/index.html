@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grades</title>
+</head>
+<body>
+
+    <div data-controller="grades">
+        <h1>Student Grades</h1>
+
+        
+        <form data-grades-target="form" data-action="submit->grades#save">
+            <label for="name">Ad:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="number">Numara:</label>
+            <input type="text" id="number" name="number" required>
+
+            <label for="midterm">Vize:</label>
+            <input type="number" id="midterm" name="midterm" required>
+
+            <label for="final">Final:</label>
+            <input type="number" id="final" name="final" required>
+
+            <button type="submit">Kaydet</button>
+        </form>
+
+        
+        <button data-action="click->grades#show">Show</button>
+
+       
+        <table data-grades-target="table" style="display:none; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Numara</th>
+                    <th>Vize</th>
+                    <th>Final</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+        import GradesController from "./controller.js";
+
+        const application = Application.start();
+        application.register("grades", GradesController);
+    </script>
+
+</body>
+</html>

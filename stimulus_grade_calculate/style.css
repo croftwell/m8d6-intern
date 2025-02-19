@@ -1,0 +1,134 @@
+/* Genel stil ayarları */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Form için stil */
+  form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form label {
+    margin: 10px 0 5px;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  form button {
+    padding: 10px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  form button:hover {
+    background-color: #4cae4c;
+  }
+  
+  /* Show Button */
+  button[data-action="click->grade#show"] {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    background-color: #0275d8;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[data-action="click->grade#show"]:hover {
+    background-color: #025aa5;
+  }
+  
+  /* Kayıtlı verilerin listesi */
+  div[data-grade-target="gradesList"] {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  div[data-grade-target="gradesList"] > div {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  div[data-grade-target="gradesList"] p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  div[data-grade-target="gradesList"] button {
+    margin: 5px;
+    padding: 7px 15px;
+    border: none;
+    background-color: #d9534f;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  div[data-grade-target="gradesList"] button:hover {
+    background-color: #c9302c;
+  }
+  
+  div[data-grade-target="gradesList"] button[data-action="click->grade#edit"] {
+    background-color: #f0ad4e;
+  }
+  
+  div[data-grade-target="gradesList"] button[data-action="click->grade#edit"]:hover {
+    background-color: #ec971f;
+  }
+  
+  /* Geçme durumu stil */
+  div[data-grade-target="gradesList"] p strong {
+    color: #5bc0de;
+  }
+  
+  div[data-grade-target="gradesList"] p:nth-child(5) {
+    font-weight: bold;
+    color: #5cb85c;
+  }
+  
+  div[data-grade-target="gradesList"] p:nth-child(5):not(.passed) {
+    color: #d9534f;
+  }
+  

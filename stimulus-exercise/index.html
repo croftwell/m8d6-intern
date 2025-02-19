@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğrenci Notları</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Öğrenci Notları</h1>
+    <form id="studentForm">
+        <input type="text" id="name" placeholder="İsim" required>
+        <input type="text" id="number" placeholder="Numara" required>
+        <input type="number" id="midterm" placeholder="Vize Notu" required>
+        <input type="number" id="final" placeholder="Final Notu" required>
+        <button type="submit">Kaydet</button>
+    </form>
+    <button id="showButton">Göster</button>
+    <div id="displayArea"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
