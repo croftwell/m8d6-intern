@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Grades</title>
+    <script type="module" src="https://unpkg.com/@hotwired/stimulus@3.2.2/dist/stimulus.js"></script>
 </head>
 <body>
 
@@ -45,7 +46,7 @@
     </div>
 
     <script type="module">
-        import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+        import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.esm.js";
         import GradesController from "./controller.js";
 
         const application = Application.start();

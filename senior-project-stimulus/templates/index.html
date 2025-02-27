@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr" data-controller="transcript">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Transkript Görüntüleyici</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://unpkg.com/@hotwired/stimulus"></script>
+</head>
+<body>
+    <div class="container" data-transcript-target="container">
+        <h1>YouTube Transkript Görüntüleyici</h1>
+        <p>YouTube video linkini girerek videonun transkriptini görüntüleyebilirsiniz.</p>
+
+        <form data-action="transcript#onFormSubmit">
+            <input type="text" data-transcript-target="urlInput" placeholder="YouTube Video URL'si">
+        
+            <select data-transcript-target="languageSelect">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+                <option value="es">İspanyolca</option>
+                <option value="fr">Fransızca</option>
+                <option value="de">Almanca</option>
+            </select>
+            
+            <label>
+                <input type="checkbox" data-transcript-target="timestampCheckbox">
+                Zaman damgası ekle
+            </label>
+            
+            <button data-action="click->transcript#fetchTranscript">Transkripti Al</button>
+        </form>
+        
+        <div class="video-container" data-transcript-target="videoContainer"></div>
+        <div class="transcript-container" data-transcript-target="transcriptContainer"></div>
+        <button class="download-button" data-transcript-target="downloadButton" style="display:none;">Transkripti İndir</button>
+    </div>
+
+    <script>
+        (() => {
+            const application = Stimulus.Application.start();
+
+            application.register("transcript", class extends Stimulus.Controller {
+                static get targets() {
+                    return ["urlInput", "languageSelect", "videoContainer", "transcriptContainer", "downloadButton", "timestampCheckbox"];
+                }
+
+                fetchTranscript() {
+                    const url = this.getUrlInputValue();
+                    const language = this.getLanguage();
+                    const videoId = this.getVideoId(url);
+
+                    const includeTimestamps = this.timestampCheckboxTarget.checked; 
+
+                    if (!videoId) {
+                        alert("Geçersiz YouTube URL'si! Lütfen geçerli bir URL girin.");
+                        return;
+                    }
+
+                    this.displayVideo(videoId);
+                    this.fetchTranscriptData(videoId, language);
+                
+
+                getUrlInputValue() {
+                    return this.urlInputTarget.value;
+                }
+
+                getLanguage() {
+                    return this.languageSelectTarget.value;
+                }
+
+                getVideoId(url) {
+                    const urlObj = new URL(url);
+                    if (urlObj.hostname === 'youtu.be') {
+                        return urlObj.pathname.slice(1);
+                    } else if (urlObj.hostname.includes('youtube.com')) {
+                        const params = new URLSearchParams(urlObj.search);
+                        return params.get('v');
+                    }
+                    return null;
+                }
+
+                displayVideo(videoId) {
+                    const iframe = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+                    this.videoContainerTarget.innerHTML = iframe;
+                }
+
+                fetchTranscriptData(videoId, language, includeTimestamps) {
+                    fetch(`/api/transcript?videoId=${videoId}&language=${language}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                alert(data.error);
+                            } else {
+                                this.displayTranscript(data.transcript);
+                            }
+                        })
+                        .catch(error => {
+                            alert("Transkript alınamadı: " + error);
+                        });
+                }
+
+                displayTranscript(transcript) {
+                    this.transcriptContainerTarget.innerText = transcript;
+                    this.showDownloadButton(transcript);
+                }
+
+                showDownloadButton(transcript) {
+                    this.downloadButtonTarget.style.display = 'block';
+                    this.downloadButtonTarget.onclick = () => {
+                        this.downloadTranscript(transcript);
+                    };
+                }
+
+                downloadTranscript(transcript) {
+                    const blob = new Blob([transcript], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'transkript.txt';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
